@@ -1,5 +1,7 @@
 import p5 from "p5";
 
+const threshold = 0.875;
+
 type Cell_connectivity = {
   top: boolean;
   left: boolean;
@@ -27,33 +29,52 @@ export class Cell {
     this.j = row;
     this.visited = false;
 
-    if (Math.random() > 0.9){
+    if (Math.random() > threshold) {
       this.connected.top = true;
-      this.connected.bottom = true;
-      this.connected.left = true;
+    }
+    if (Math.random() > threshold) {
       this.connected.right = true;
+    }
+    if (Math.random() > threshold) {
+      this.connected.bottom = true;
+    }
+    if (Math.random() > threshold) {
+      this.connected.left = true;
     }
   }
 
   draw(sketch: p5) {
-    sketch.push();
-    sketch.strokeWeight(2);
-    sketch.noFill();
-    sketch.rect(this.s * this.i, this.s * this.j, this.s * (this.i + 1), this.s * (this.j + 1));
-    sketch.pop();
-
     if (this.connected.top) {
-      sketch.line((this.i + 0.5) * this.s, (this.j + 0.5) * this.s, (this.i + 0.5) * this.s, (this.j - 0.5) * this.s);
+      sketch.line(
+        (this.i + 0.5) * this.s,
+        (this.j + 0.5) * this.s,
+        (this.i + 0.5) * this.s,
+        (this.j - 0.5) * this.s
+      );
     }
     if (this.connected.left) {
-      sketch.line((this.i + 0.5) * this.s, (this.j + 0.5) * this.s, (this.i - 0.5) * this.s, (this.j + 0.5) * this.s);
+      sketch.line(
+        (this.i + 0.5) * this.s,
+        (this.j + 0.5) * this.s,
+        (this.i - 0.5) * this.s,
+        (this.j + 0.5) * this.s
+      );
     }
     if (this.connected.bottom) {
-      sketch.line((this.i + 0.5) * this.s, (this.j + 0.5) * this.s, (this.i + 0.5) * this.s, (this.j + 1.5) * this.s);
+      sketch.line(
+        (this.i + 0.5) * this.s,
+        (this.j + 0.5) * this.s,
+        (this.i + 0.5) * this.s,
+        (this.j + 1.5) * this.s
+      );
     }
     if (this.connected.right) {
-      sketch.line((this.i + 0.5) * this.s, (this.j + 0.5) * this.s, (this.i + 1.5) * this.s, (this.j + 0.5) * this.s);
+      sketch.line(
+        (this.i + 0.5) * this.s,
+        (this.j + 0.5) * this.s,
+        (this.i + 1.5) * this.s,
+        (this.j + 0.5) * this.s
+      );
     }
-    
   }
 }
